@@ -7,7 +7,7 @@ dotenv.config()
 
 ////creating API 
 app.get("/",(req,res)=> {        ////2nd paramenter is callback with requestn and respond in the parament of callback functoin
-    res.send("API is running great");
+    res.send("API is running great now");
 });
 
 app.get("/api/chats",(req,res)=>{      ///this send  out chat data that's imported in///
