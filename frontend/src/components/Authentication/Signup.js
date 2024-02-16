@@ -80,7 +80,7 @@ const Signup = () => {
                 colorScheme='blue'
                 width="100%"
                 style={{marginTop:15}}
-                onClick={submitHandler}>Submit</Button>
+                onClick={submitHandler}>Sign Up</Button>
             
         </VStack>
     )
