@@ -1,9 +1,13 @@
 const express=require("express");
 const dotenv=require("dotenv")
 const {chats}=require("./data/data")
+const connectDB=require('./config/db')
+const colors=require('colors')
+
 
 const app=express();
-dotenv.config()
+dotenv.config();
+connectDB();
 
 ////creating API 
 app.get("/",(req,res)=> {        ////2nd paramenter is callback with requestn and respond in the parament of callback functoin
@@ -21,4 +25,4 @@ app.get("/api/chats/:id",(req,res)=>{      ///this is for single chat
 
 const PORT=process.env.PORT|| 5000;
 
-app.listen(5001,console.log(`Server starts at ${PORT}`))  ////running npm start will run this//
+app.listen(5001,console.log(`Server starts at ${PORT}`.yellow.bold))  ////running npm start will run this//
