@@ -2,12 +2,15 @@ const express=require("express");
 const dotenv=require("dotenv")
 const {chats}=require("./data/data")
 const connectDB=require('./config/db')
-const colors=require('colors')
-
+const colors=require('colors');
+const useerRoutes=require('./routes/userRoutes')
+const {notFound,errorHandler}=require('./middleware/errorMiddleware')
 
 const app=express();
 dotenv.config();
 connectDB();
+
+app.use(express.json())   //this accepts JSON Data
 
 ////creating API 
 app.get("/",(req,res)=> {        ////2nd paramenter is callback with requestn and respond in the parament of callback functoin
@@ -22,6 +25,11 @@ app.get("/",(req,res)=> {        ////2nd paramenter is callback with requestn an
 //     const singleChat=chats.find(c=>c._id=== req.params.id);
 //     res.send(singleChat)
 // })
+
+app.use('/api/user',userRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT=process.env.PORT|| 5000;
 
