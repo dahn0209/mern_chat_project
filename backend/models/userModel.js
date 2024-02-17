@@ -12,7 +12,6 @@ const userSchema=mongoose.Schema({
         required:true
     }, pic:{
         type:String,
-        required:true,
         default:"https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
     },
     
