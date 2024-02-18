@@ -1,7 +1,7 @@
 const express=require('express');
 const { registerUser,authUser } = require('../controllers/userControllers');
 
-const router= express.router();
+const router= express.Router();
 
 
 router.route('/').post(registerUser)
@@ -9,4 +9,4 @@ router.route('/login',authUser);
 
 
 
-module.exports=routers;
+module.exports=router;
