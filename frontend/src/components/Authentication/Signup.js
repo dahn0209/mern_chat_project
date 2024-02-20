@@ -39,12 +39,12 @@ const Signup = () => {
             const data=new FormData();
             data.append('file', pics);
             data.append('upload_preset',"chat-app" )
-            data.append("cloud_name","dsfz1ie14")
+            data.append("cloud_name","dsfzdsfz1ie141ie14")
             fetch('https://api.cloudinary.com/v1_1/dsfz1ie14/image/upload',{
                 method:"post",
                 body:data,
             })
-            .then((res)=>{res.json()})
+            .then((res)=>res.json())
             .then((data)=>{
                 console.log('data->',data);
                 console.log('toString->',data.url.toString())
@@ -189,7 +189,6 @@ const Signup = () => {
                     p={1.5}
                     accept="image/*"
                     onChange={(e)=>{
-                        console.log('vdff=>',e.target.files)
                         postDetails(e.target.files[0])}}
                 />
             </FormControl>
