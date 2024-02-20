@@ -1,7 +1,10 @@
 import React,{useState} from 'react'
 import { FormLabel, VStack,Input, InputGroup, InputRightElement, Button } from '@chakra-ui/react'
-import { FormControl,useToast } from '@chakra-ui/react'
+import { FormControl,useToast } from '@chakra-ui/react';
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
+ 
 const Signup = () => {
     
     const [show,setShow]=useState(false)
@@ -12,6 +15,7 @@ const Signup = () => {
     const [pic,setPic]=useState();
     const [loading,setLoading]=useState(false)
     const toast=useToast();
+    const history=useHistory();
 
     const handleClick=()=> setShow(!show);
 
@@ -31,15 +35,19 @@ const Signup = () => {
         }
 
         if((pics.type==="image/jpeg")|| (pics.type==="image/png")){
+            console.log('pics=>',pics)
             const data=new FormData();
-            data.append("file",pics);
+            data.append('file', pics);
             data.append('upload_preset',"chat-app" )
-            data.append("cloud_name","du1lom7gh")
-            fetch('https://api.cloudinary.com/v1_1/du1lom7gh/image/upload',{
+            data.append("cloud_name","dsfz1ie14")
+            fetch('https://api.cloudinary.com/v1_1/dsfz1ie14/image/upload',{
                 method:"post",
                 body:data,
-            }).then((res)=>{res.json()}).then(data=>{
-                console.log('data->',data)
+            })
+            .then((res)=>{res.json()})
+            .then((data)=>{
+                console.log('data->',data);
+                console.log('toString->',data.url.toString())
                 setPic(data.url.toString());
                 setLoading(false);
             }).catch((err)=>{
@@ -61,7 +69,69 @@ const Signup = () => {
 
     };
 
-    const submitHandler=()=>{}
+    const submitHandler=async ()=>{
+        setLoading(true);
+        if (!name || !email || !password || !confirmPassword) {
+            toast({
+              title: "Fill all Fields",
+              status: "warning",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+            });
+            setLoading(false);
+            return;
+        }
+        if (password !== confirmPassword) {
+            toast({
+              title: "Passwords do Not Match",
+              status: "warning",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+            });
+            return;
+        } 
+        
+        try {
+            const config = {
+              headers: {
+                "Content-type": "application/json",
+              },
+            };
+            const { data } = await axios.post(
+              "/api/user",
+              {
+                name,
+                email,
+                password,
+                pic,
+              },
+              config
+            );
+            console.log(data);
+            toast({
+              title: "Registration Successful",
+              status: "success",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+            });
+            localStorage.setItem("userInfo", JSON.stringify(data));
+            setLoading(false);
+            history.push("/chats");
+          } catch (error) {
+            toast({
+              title: "Error!",
+              description: error.response.data.message,
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+            });
+            setLoading(false);
+          }
+    }
 
     return (
         <VStack spacing="5px" color='black'>
@@ -102,7 +172,7 @@ const Signup = () => {
                             <Input
                                 type={ show? "text": "password"}
                                 placeholder='Confirm password'
-                                onChange={(e)=>{setPassword(e.target.value)}}
+                                onChange={(e)=>{setConfirmPassowrd(e.target.value)}}
                             />
                             <InputRightElement width='4.5rem'>
                                 <Button h="1.75rem" size="sm" onClick={handleClick} >
