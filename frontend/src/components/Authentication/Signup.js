@@ -69,12 +69,12 @@ const Signup = () => {
 
     };
 
-    const submitHandler=async ()=>{
+    const submitHandler= async()=>{
         setLoading(true);
         if (!name || !email || !password || !confirmPassword) {
             toast({
               title: "Fill all Fields",
-              status: "warning",
+              status: "warning fill it up",
               duration: 5000,
               isClosable: true,
               position: "bottom",
@@ -85,7 +85,7 @@ const Signup = () => {
         if (password !== confirmPassword) {
             toast({
               title: "Passwords do Not Match",
-              status: "warning",
+              status: "warning password doesn't match",
               duration: 5000,
               isClosable: true,
               position: "bottom",
@@ -122,7 +122,7 @@ const Signup = () => {
             history.push("/chats");
           } catch (error) {
             toast({
-              title: "Error!",
+              title: "Error why!",
               description: error.response.data.message,
               status: "error",
               duration: 5000,
